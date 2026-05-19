@@ -12,6 +12,7 @@ const Hero = () => {
       <div className="absolute inset-0 flex items-center justify-center bg-black-100">
         <div className="pointer-events-none absolute inset-0 bg-black-100 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
       </div>
+      
     </div>
   )
 }
