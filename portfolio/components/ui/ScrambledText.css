@@ -1,0 +1,13 @@
+.text-block {
+  margin: 0;
+  max-width: 100%;
+  font-family: inherit;
+  font-size: clamp(14px, 4vw, 72px);
+  color: #fff;
+  font-weight: bold;
+}
+
+.char {
+  will-change: transform;
+  display: inline-block;
+}

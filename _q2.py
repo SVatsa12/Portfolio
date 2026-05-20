@@ -1,0 +1,1 @@
+import sys; print('char at end:', repr(open(r'C:\Users\qshub\OneDrive\Desktop\PORTFOLIO\_q2.py','rb').read()[-10:]))
