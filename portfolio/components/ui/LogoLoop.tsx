@@ -1,15 +1,8 @@
 import { useRef, useLayoutEffect, useState, useMemo } from "react";
 import {
   motion,
-  useSpring,
-  useTransform,
-  useRawValue,
-  useResolvedValue,
-  useScroll,
-  useVelocity,
   useAnimationFrame,
   useMotionValue,
-  MotionValue,
 } from "motion/react";
 
 import "./LogoLoop.css";
@@ -37,6 +30,7 @@ const LogoLoop = ({
   const baseX = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [contentWidth, setContentWidth] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   // We need to duplicate the items to make the loop seamless
   // Calculation: duplicate enough to fill the container width twice
@@ -47,6 +41,8 @@ const LogoLoop = ({
   }, [logos, gap]);
 
   useAnimationFrame((t, delta) => {
+    if (isPaused && pauseOnHover) return;
+
     let moveBy = direction === "left" ? -speed : speed;
     
     // Convert to pixels per frame roughly
@@ -66,7 +62,13 @@ const LogoLoop = ({
   });
 
   return (
-    <div className="logo-loop-container">
+    <div 
+      className="logo-loop-container"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setIsPaused(false)}
+    >
       <motion.div 
         className="logo-loop-content"
         ref={containerRef}
@@ -77,7 +79,7 @@ const LogoLoop = ({
       >
         {/* Render twice for seamless loop */}
         {[...logos, ...logos, ...logos, ...logos].map((item, idx) => (
-          <div key={idx} className="logo-item">
+          <div key={idx} className="logo-item" onClick={() => setIsPaused(!isPaused)}>
             {item.node}
           </div>
         ))}

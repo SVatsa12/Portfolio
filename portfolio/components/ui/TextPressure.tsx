@@ -128,7 +128,7 @@ const TextPressure = ({
 
   useEffect(() => {
     const debouncedSetSize = debounce(setSize, 100);
-    debouncedSetSize();
+    setSize(); // Call immediately on mount so heading is visible on refresh
     window.addEventListener('resize', debouncedSetSize as any);
     return () => window.removeEventListener('resize', debouncedSetSize as any);
   }, [setSize]);

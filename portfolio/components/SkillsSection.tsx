@@ -2,6 +2,31 @@
 
 import React from "react";
 import TextPressure from "./ui/TextPressure";
+import LogoLoop from "./ui/LogoLoop";
+import {
+  DiJava,
+  DiPython,
+  DiJavascript,
+  DiPostgresql,
+  DiMongodb,
+  DiMysql,
+  DiReact,
+  DiNodejs,
+  DiHtml5,
+  DiCss3,
+  DiGit,
+  DiDocker,
+} from "react-icons/di";
+import { 
+  SiExpress, 
+  SiFastapi, 
+  SiPrisma, 
+  SiNextdotjs, 
+  SiTailwindcss, 
+  SiCplusplus,
+  SiC 
+} from "react-icons/si";
+import { VscVscode } from "react-icons/vsc";
 
 interface SkillCategory {
   title: string;
@@ -55,6 +80,54 @@ const SkillsSection = () => {
   // Flatten all skills for marquee
   const allSkills = skillCategories.flatMap((cat) => cat.skills);
 
+  const skillIconMap: { [key: string]: any } = {
+    Java: DiJava,
+    Python: DiPython,
+    JavaScript: DiJavascript,
+    SQL: DiPostgresql,
+    "C++": SiCplusplus,
+    C: SiC,
+    "React.js": DiReact,
+    "Next.js": SiNextdotjs,
+    HTML: DiHtml5,
+    CSS: DiCss3,
+    "Tailwind CSS": SiTailwindcss,
+    "Node.js": DiNodejs,
+    "Express.js": SiExpress,
+    FastAPI: SiFastapi,
+    PostgreSQL: DiPostgresql,
+    MongoDB: DiMongodb,
+    MySQL: DiMysql,
+    Git: DiGit,
+    Docker: DiDocker,
+    "Prisma ORM": SiPrisma,
+    "VS Code": VscVscode,
+  };
+
+  const skillLogoItems = allSkills.map((skill) => {
+    const IconComponent = skillIconMap[skill];
+    // Don't show icons for AI/ML and Core Concepts Categories
+    const showIcon = !skillCategories
+      .filter(cat => cat.title === "AI/ML" || cat.title === "Core Concepts")
+      .some(cat => cat.skills.includes(skill));
+    
+    return {
+      node: (
+        <div key={skill} className="px-5 py-2.5 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-full hover:border-cyan-500 transition-colors duration-300 cursor-pointer group flex items-center justify-center gap-2">
+          {showIcon && IconComponent ? (
+            <IconComponent size={18} className="text-cyan-400" />
+          ) : showIcon && !IconComponent ? (
+            <span className="text-cyan-400 font-bold text-xs tracking-tighter">{skill.charAt(0)}</span>
+          ) : null}
+          <span className="text-white/90 font-medium text-sm group-hover:text-cyan-300 transition-colors">
+            {skill}
+          </span>
+        </div>
+      ),
+      title: skill,
+    };
+  });
+
   return (
     <section id="skills" className="w-full py-20 bg-black-100 overflow-hidden relative">
       {/* Decorative Background Text */}
@@ -95,85 +168,26 @@ const SkillsSection = () => {
           </div>
         </div>
 
-        {/* Marquee Scroll Container */}
-        <div className="relative w-full overflow-hidden">
-          <style>{`
-            @keyframes marquee {
-              0% {
-                transform: translateX(0);
-              }
-              100% {
-                transform: translateX(-50%);
-              }
-            }
-            
-            .marquee {
-              display: flex;
-              animation: marquee 40s linear infinite;
-              width: 200%;
-            }
-            
-            .marquee:hover {
-              animation-play-state: paused;
-            }
-            
-            .marquee-content {
-              display: flex;
-              gap: 2rem;
-              min-width: 50%;
-              flex-shrink: 0;
-            }
-          `}</style>
-
-          <div className="marquee">
-            {/* First set */}
-            <div className="marquee-content">
-              {allSkills.map((skill, index) => (
-                <div
-                  key={`skill-1-${index}`}
-                  className="flex items-center justify-center whitespace-nowrap"
-                >
-                  <div className="px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/50 rounded-full hover:border-cyan-500 transition-colors duration-300 cursor-pointer group">
-                    <span className="text-white font-medium text-sm group-hover:text-cyan-300 transition-colors">
-                      {skill}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Second set (duplicate for seamless loop) */}
-            <div className="marquee-content">
-              {allSkills.map((skill, index) => (
-                <div
-                  key={`skill-2-${index}`}
-                  className="flex items-center justify-center whitespace-nowrap"
-                >
-                  <div className="px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/50 rounded-full hover:border-cyan-500 transition-colors duration-300 cursor-pointer group">
-                    <span className="text-white font-medium text-sm group-hover:text-cyan-300 transition-colors">
-                      {skill}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Gradient overlays for fade effect */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black-100 to-transparent pointer-events-none z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black-100 to-transparent pointer-events-none z-10" />
+        {/* Logo Loop Component */}
+        <div className="relative w-full overflow-hidden mb-16">
+          <LogoLoop
+            logos={skillLogoItems}
+            speed={5}
+            direction="left"
+            gap={20}
+          />
         </div>
 
         {/* Skills Grid by Category */}
-        <div className="mt-20 px-4 max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="mt-12 px-4 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skillCategories.map((category, idx) => (
               <div
                 key={idx}
-                className="p-8 min-h-[260px] flex flex-col bg-gradient-to-br from-slate-900/50 to-slate-800/50 border border-slate-700/50 rounded-xl hover:border-cyan-500/50 transition-colors duration-300"
+                className="p-5 flex flex-col bg-slate-900/40 backdrop-blur-sm border border-slate-800 rounded-xl hover:border-cyan-500/30 transition-all duration-500 group"
               >
-                <div className="w-full mb-6 pb-3 border-b border-slate-700/50">
-                  <div className="relative w-full h-10 overflow-hidden">
+                <div className="w-full mb-3 pb-2 border-b border-slate-700/50">
+                  <div className="relative w-full h-8 overflow-hidden">
                     <TextPressure
                       text={category.title}
                       fontFamily="Arial"
@@ -184,21 +198,28 @@ const SkillsSection = () => {
                       weight={true}
                       italic={true}
                       textColor="#22d3ee"
-                      minFontSize={18}
-                      maxFontSize={22}
+                      minFontSize={16}
+                      maxFontSize={20}
                       scale={false}
                     />
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2 flex-grow">
-                  {category.skills.map((skill, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 text-sm bg-slate-700/50 text-slate-200 rounded-md hover:bg-cyan-500/20 hover:text-cyan-300 transition-colors"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill, sIdx) => {
+                    const IconComponent = skillIconMap[skill];
+                    const showIcon = category.title !== "AI/ML" && category.title !== "Core Concepts";
+                    return (
+                      <div
+                        key={sIdx}
+                        className="flex items-center gap-2 px-2.5 py-1 rounded-md bg-slate-800/40 border border-slate-700/50 text-slate-300 text-xs hover:bg-slate-700 transition-colors"
+                      >
+                        {showIcon && IconComponent && (
+                          <IconComponent size={14} className="text-cyan-500" />
+                        )}
+                        {skill}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}

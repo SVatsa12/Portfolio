@@ -8,9 +8,16 @@
 
 @media (max-width: 768px) {
   .pill-nav-container {
-    width: 100%;
-    left: 0;
-    transform: none;
+    width: calc(100% - 2rem);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(5, 10, 36, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 9999px;
+    padding: 0 0.5rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   }
 }
 
@@ -30,7 +37,7 @@
   .pill-nav {
     width: 100%;
     justify-content: space-between;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
     background: transparent;
   }
 }
@@ -195,7 +202,7 @@
 .hamburger-line {
   width: 16px;
   height: 2px;
-  background: var(--pill-bg, #fff);
+  background: var(--pill-text, var(--pill-bg, #fff));
   border-radius: 1px;
   transition: all 0.01s ease;
   transform-origin: center;

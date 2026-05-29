@@ -3,6 +3,8 @@
 import About from "@/components/About";
 import Hero from "@/components/Hero";
 import SkillsSection from "@/components/SkillsSection";
+import HowIWork from "@/components/HowIWork";
+import Contact from "@/components/Contact";
 import dynamic from "next/dynamic";
 import PillNav from "@/components/ui/PillNav";
 
@@ -14,6 +16,7 @@ export default function Home() {
   const navItems = [
     { label: "About", href: "#about" },
     { label: "Projects", href: "#projects" },
+    { label: "Approach", href: "#how-i-work" },
     { label: "Skills", href: "#skills" },
     { label: "Contact", href: "#contact" },
   ];
@@ -35,7 +38,9 @@ export default function Home() {
       <section id="projects">
         <AnimatedPinDemo />
       </section>
+      <HowIWork />
       <SkillsSection />
+      <Contact />
     </main>
   );
 }

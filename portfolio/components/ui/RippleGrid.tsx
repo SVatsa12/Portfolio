@@ -32,7 +32,7 @@ const RippleGrid = ({
   opacity = 1.0,
   gridRotation = 0,
   mouseInteraction = true,
-  mouseInteractionRadius = 1
+  mouseInteractionRadius = 1,
 }: RippleGridProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mousePositionRef = useRef({ x: 0.5, y: 0.5 });
@@ -53,7 +53,7 @@ const RippleGrid = ({
 
     const renderer = new Renderer({
       dpr: Math.min(window.devicePixelRatio, 2),
-      alpha: true
+      alpha: true,
     });
     const gl = renderer.gl;
     gl.enable(gl.BLEND);
@@ -113,9 +113,7 @@ void main() {
         vec2 mouseUv = (mousePosition * 2.0 - 1.0);
         mouseUv.x *= iResolution.x / iResolution.y;
         float mouseDist = length(uv - mouseUv);
-        
         float influence = mouseInfluence * exp(-mouseDist * mouseDist / (mouseInteractionRadius * mouseInteractionRadius));
-        
         float mouseWave = sin(pi * (iTime * 2.0 - mouseDist * 3.0)) * influence;
         rippleUv += normalize(uv - mouseUv) * mouseWave * rippleIntensity * 0.3;
     }
@@ -141,12 +139,12 @@ void main() {
     }
 
     float ddd = exp(-2.0 * clamp(pow(dist, fadeDistance), 0.0, 1.0));
-    
+
     vec2 vignetteCoords = vUv - 0.5;
     float vignetteDistance = length(vignetteCoords);
     float vignette = 1.0 - pow(vignetteDistance * 2.0, vignetteStrength);
     vignette = clamp(vignette, 0.0, 1.0);
-    
+
     vec3 t;
     if (enableRainbow) {
         t = vec3(
@@ -179,7 +177,7 @@ void main() {
       mouseInteraction: { value: mouseInteraction },
       mousePosition: { value: [0.5, 0.5] },
       mouseInfluence: { value: 0 },
-      mouseInteractionRadius: { value: mouseInteractionRadius }
+      mouseInteractionRadius: { value: mouseInteractionRadius },
     };
 
     uniformsRef.current = uniforms;
@@ -187,6 +185,9 @@ void main() {
     const geometry = new Triangle(gl);
     const program = new Program(gl, { vertex: vert, fragment: frag, uniforms });
     const mesh = new Mesh(gl, { geometry, program });
+
+    // Track RAF ID for proper cancellation
+    let rafId = 0;
 
     const resize = () => {
       const { clientWidth: w, clientHeight: h } = container;
@@ -198,8 +199,23 @@ void main() {
       if (!mouseInteraction) return;
       const rect = container.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
-      const y = 1.0 - (e.clientY - rect.top) / rect.height; // Flip Y coordinate
+      const y = 1.0 - (e.clientY - rect.top) / rect.height;
       targetMouseRef.current = { x, y };
+    };
+
+    // Touch support for mobile
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!mouseInteraction) return;
+      const touch = e.touches[0];
+      const rect = container.getBoundingClientRect();
+      const x = (touch.clientX - rect.left) / rect.width;
+      const y = 1.0 - (touch.clientY - rect.top) / rect.height;
+      targetMouseRef.current = { x, y };
+      mouseInfluenceRef.current = 1.0;
+    };
+
+    const handleTouchEnd = () => {
+      mouseInfluenceRef.current = 0.0;
     };
 
     const handleMouseEnter = () => {
@@ -217,6 +233,8 @@ void main() {
       container.addEventListener('mousemove', handleMouseMove);
       container.addEventListener('mouseenter', handleMouseEnter);
       container.addEventListener('mouseleave', handleMouseLeave);
+      container.addEventListener('touchmove', handleTouchMove, { passive: true });
+      container.addEventListener('touchend', handleTouchEnd);
     }
     resize();
 
@@ -230,24 +248,30 @@ void main() {
       const currentInfluence = Number(uniforms.mouseInfluence.value);
       const targetInfluence = mouseInfluenceRef.current;
       uniforms.mouseInfluence.value = currentInfluence + (targetInfluence - currentInfluence) * 0.05;
-
       uniforms.mousePosition.value = [mousePositionRef.current.x, mousePositionRef.current.y];
 
       renderer.render({ scene: mesh });
-      requestAnimationFrame(render);
+      rafId = requestAnimationFrame(render);
     };
 
-    requestAnimationFrame(render);
+    rafId = requestAnimationFrame(render);
 
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener('resize', resize);
       if (mouseInteraction && container) {
         container.removeEventListener('mousemove', handleMouseMove);
         container.removeEventListener('mouseenter', handleMouseEnter);
         container.removeEventListener('mouseleave', handleMouseLeave);
+        container.removeEventListener('touchmove', handleTouchMove);
+        container.removeEventListener('touchend', handleTouchEnd);
       }
-      renderer.gl.getExtension('WEBGL_lose_context')?.loseContext();
-      container?.removeChild(gl.canvas);
+      try {
+        renderer.gl.getExtension('WEBGL_lose_context')?.loseContext();
+        if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
+      } catch {
+        // Ignore cleanup errors
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -286,7 +310,7 @@ void main() {
     opacity,
     gridRotation,
     mouseInteraction,
-    mouseInteractionRadius
+    mouseInteractionRadius,
   ]);
 
   return <div ref={containerRef} className="ripple-grid-container" />;

@@ -42,25 +42,16 @@ const About = () => {
 
         <div className="space-y-10">
           <p className="text-lg leading-9 text-white-100 sm:text-xl sm:leading-10">
-            I&apos;m Shubham Vatsa, an Information Science undergraduate and
-            third-year student in the Class of 2027. I build things that scale:
-            real-time systems, AI-powered pipelines, and full-stack products
-            that go beyond the tutorial.
+            I&apos;m Shubham Vatsa, an Information Science and Engineering undergrad, Class of 2027.
+I approach every problem with a systems-first mindset. I care about architecture, clean APIs, and code that stays reliable as complexity grows. For me, software isn't just about making things work it&apos;s about designing solutions that are clear, efficient, and built for the real world
           </p>
 
           <p className="text-base leading-8 text-white-200 sm:text-lg sm:leading-9">
-            I&apos;ve shipped a meeting intelligence platform with live
-            transcription, a URL shortener with analytics, and a multi-user task
-            manager, each built with production practices like JWT auth, Docker,
-            WebSockets, and clean REST APIs. My stack spans FastAPI, Node.js,
-            React, PostgreSQL, and MongoDB, and I&apos;m comfortable threading
-            LLMs into workflows using Whisper, Ollama, and prompt engineering.
+            I &apos;ve enjoyed working across the full stack, integrating intelligent systems into practical workflows, and picking up whatever a problem demands. Beyond writing code, I invest time in DSA and system design because understanding how software behaves under load is what separates good engineers from great ones.
           </p>
 
           <p className="text-base leading-8 text-white-200 sm:text-lg sm:leading-9">
-            Outside of code, I&apos;m grinding DSA on LeetCode and thinking
-            about system design. I build for clarity, performance, and the kind
-            of architecture that doesn&apos;t collapse under load.
+            I believe great engineers look beyond the surface  where bottlenecks hide, how components interact, and why certain architectures endure.I build for clarity, engineer for performance, and think for the long term.
           </p>
         </div>
       </div>

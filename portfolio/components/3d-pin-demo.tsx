@@ -2,37 +2,55 @@
 import React from "react";
 import { PinContainer } from "@/components/ui/3d-pin";
 import ScrambledText from "@/components/ui/ScrambledText";
+import { FaLocationArrow } from "react-icons/fa";
+import {
+  SiNextdotjs,
+  SiTailwindcss,
+  SiTypescript,
+  SiThreedotjs,
+  SiFramer,
+  SiReact,
+} from "react-icons/si";
 
 export default function AnimatedPinDemo() {
   const projects = [
     {
-      title: "Aceternity UI",
-      href: "https://twitter.com/mannupaaji",
-      description: "Customizable Tailwind CSS and Framer Motion Components.",
-      gradient: "from-violet-500 via-purple-500 to-blue-500",
+      id: 1,
+      title: "AI Image SaaS - Canva Application",
+      description:
+        "A REAL Software-as-a-Service app with AI features and a payments and credits system using the latest tech stack.",
+      iconLists: [SiReact, SiTailwindcss, SiTypescript, SiThreedotjs, SiFramer],
+      link: "https://github.com/SVatsa12",
     },
     {
-      title: "Next.js App",
-      href: "https://nextjs.org",
-      description: "The React Framework for Production.",
-      gradient: "from-cyan-500 via-blue-500 to-indigo-500",
+      id: 2,
+      title: "Animated Apple Iphone 3D Website",
+      description:
+        "Recreated the Apple iPhone 15 Pro website, combining GSAP animations and Three.js 3D effects..",
+      iconLists: [SiNextdotjs, SiTailwindcss, SiTypescript, SiThreedotjs, SiFramer],
+      link: "https://github.com/SVatsa12",
     },
     {
-      title: "Web Design",
-      href: "https://example.com",
-      description: "Modern and Minimalistic Design Systems.",
-      gradient: "from-pink-500 via-red-500 to-yellow-500",
+      id: 3,
+      title: "Post-it App",
+      description:
+        "A simple post-it app that allows you to create, edit, and delete notes. Built with React and Firebase.",
+      iconLists: [SiReact, SiTailwindcss, SiTypescript, SiFramer],
+      link: "https://github.com/SVatsa12",
     },
     {
-      title: "Dev Tools",
-      href: "https://example.com",
-      description: "Essential Tools for Web Development.",
-      gradient: "from-green-500 via-emerald-500 to-teal-500",
+      id: 4,
+      title: "Modern Portfolio",
+      description:
+        "A modern and minimalistic portfolio built with Next.js, Framer Motion, and Tailwind CSS.",
+      iconLists: [SiNextdotjs, SiTailwindcss, SiTypescript, SiFramer],
+      link: "https://github.com/SVatsa12",
     },
   ];
 
   return (
-    <div className="w-full py-20 bg-black-100">
+    <div id="projects" className="py-20 w-full bg-black-100">
+      {/* Heading */}
       <div className="flex flex-col items-center justify-center mb-12">
         <ScrambledText
           radius={150}
@@ -42,28 +60,52 @@ export default function AnimatedPinDemo() {
           className="text-white"
           style={{ fontSize: "3rem", fontWeight: "bold", marginBottom: "1rem" }}
         >
-          Projects
+          Recent Projects
         </ScrambledText>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full px-4">
-        {projects.map((project, index) => (
-          <div key={index} className="h-[28rem] flex items-center justify-center">
-            <PinContainer
-              title={project.title}
-              href={project.href}
-              containerClassName="w-full h-full"
-            >
-              <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 w-full h-full">
-                <h3 className="max-w-xs !pb-2 !m-0 font-bold text-2xl text-slate-100">
-                  {project.title}
-                </h3>
-                <div className="text-xs !m-0 !p-0 font-normal">
-                  <span className="text-slate-500">{project.description}</span>
-                </div>
-                <div className={`flex flex-1 w-full rounded-lg mt-4 bg-gradient-to-br ${project.gradient}`} />
+
+      {/* Grid — two equal columns on md+, single column on mobile */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 max-w-5xl mx-auto px-6">
+        {projects.map(({ id, title, description, iconLists, link }) => (
+          <PinContainer key={id} title="/shubhamvatsa.dev" href={link}>
+            {/* Preview */}
+            <div className="w-full overflow-hidden rounded-2xl bg-[#13162d] h-[220px] mb-6">
+              <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
+                <span className="text-slate-500 font-bold opacity-20 text-4xl uppercase tracking-tighter">
+                  Preview
+                </span>
               </div>
-            </PinContainer>
-          </div>
+            </div>
+
+            {/* Title */}
+            <h1 className="font-bold text-xl line-clamp-1 text-white">
+              {title}
+            </h1>
+
+            {/* Description */}
+            <p className="text-sm font-light line-clamp-2 text-slate-400 mt-2">
+              {description}
+            </p>
+
+            {/* Footer */}
+            <div className="flex items-center justify-between mt-6 mb-2">
+              <div className="flex items-center">
+                {iconLists.map((Icon, index) => (
+                  <div
+                    key={index}
+                    className="border border-white/[0.2] rounded-full bg-black w-9 h-9 flex items-center justify-center"
+                    style={{ transform: `translateX(-${5 * index * 2}px)` }}
+                  >
+                    <Icon className="p-2 text-white w-full h-full" />
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center">
+                <p className="text-sm text-purple">Check Live Site</p>
+                <FaLocationArrow className="ms-3" color="#CBACF9" />
+              </div>
+            </div>
+          </PinContainer>
         ))}
       </div>
     </div>

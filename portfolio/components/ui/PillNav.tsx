@@ -352,7 +352,7 @@ const PillNav = ({
         </div>
 
         <button
-          className="mobile-menu-button mobile-only"
+          className="mobile-menu-button"
           onClick={toggleMobileMenu}
           aria-label="Toggle menu"
           ref={hamburgerRef}
