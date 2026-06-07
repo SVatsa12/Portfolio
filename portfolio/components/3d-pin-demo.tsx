@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { PinContainer } from "@/components/ui/3d-pin";
 import ScrambledText from "@/components/ui/ScrambledText";
 import { FaLocationArrow } from "react-icons/fa";
@@ -73,7 +74,14 @@ export default function AnimatedPinDemo() {
           <PinContainer key={id} title="/shubhamvatsa.dev" href={link}>
             {/* Preview */}
             <div className="w-full overflow-hidden rounded-2xl bg-[#13162d] h-[220px] mb-6 relative">
-              <img src={img} alt={title} className="w-full h-full object-cover" />
+              <Image 
+                src={img} 
+                alt={title} 
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover" 
+                priority={id === 1}
+              />
             </div>
 
             {/* Title */}
