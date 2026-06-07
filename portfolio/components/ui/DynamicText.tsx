@@ -20,15 +20,15 @@ export default function DynamicText({
   }, [phrases.length, interval]);
 
   return (
-    <div className="relative inline-block overflow-hidden h-[1.5em] px-2 w-full text-center">
+    <div className="relative flex justify-center h-[1.5em] w-full overflow-visible">
       <AnimatePresence mode="wait">
         <motion.span
           key={index}
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -20, opacity: 0 }}
+          initial={{ y: 20, opacity: 0, x: "-50%" }}
+          animate={{ y: 0, opacity: 1, x: "-50%" }}
+          exit={{ y: -20, opacity: 0, x: "-50%" }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="absolute inset-0 w-full text-center text-cyan-400"
+          className="absolute left-1/2 whitespace-nowrap text-cyan-400"
         >
           {phrases[index]}
         </motion.span>
