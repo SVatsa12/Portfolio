@@ -118,7 +118,7 @@ const Contact = () => {
             { label: "Email", icon: <FaEnvelope />, href: "mailto:qshubhamq2@gmail.com", color: "hover:text-emerald-400" },
             { label: "GitHub", icon: <FaGithub />, href: "https://github.com/SVatsa12", color: "hover:text-white" },
             { label: "LinkedIn", icon: <FaLinkedinIn />, href: "https://www.linkedin.com/in/svatsa12", color: "hover:text-blue-400" },
-            { label: "Resume", icon: <FaFileAlt />, href: "/resume.pdf", color: "hover:text-purple-400" }
+            { label: "Resume", icon: <FaFileAlt />, href: "https://drive.google.com/file/d/1Hyi4HPxXWNgYzJbGGEayDHUZ-Af8l3RX/view?usp=drive_link", color: "hover:text-purple-400" }
           ].map((item, i) => (
             <motion.a
               key={item.label}

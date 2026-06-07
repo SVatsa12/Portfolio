@@ -20,7 +20,7 @@ const nodes = [
   { id: "email", icon: <FaEnvelope />, color: "#10b981", label: "Email", link: "mailto:qshubhamq2@gmail.com", pos: [4, 2, 0], desc: "Direct Communication" },
   { id: "github", icon: <FaGithub />, color: "#3b82f6", label: "GitHub", link: "https://github.com/SVatsa12", pos: [-4, 3, -1], desc: "Open Source Activity" },
   { id: "linkedin", icon: <FaLinkedinIn />, color: "#0ea5e9", label: "LinkedIn", link: "https://www.linkedin.com/in/svatsa12", pos: [-3, -3, 2], desc: "Professional Network" },
-  { id: "resume", icon: <FaFileAlt />, color: "#a855f7", label: "Resume", link: "/resume.pdf", pos: [3, -2, -2], desc: "Technical Profile" },
+  { id: "resume", icon: <FaFileAlt />, color: "#a855f7", label: "Resume", link: "https://drive.google.com/file/d/1Hyi4HPxXWNgYzJbGGEayDHUZ-Af8l3RX/view?usp=drive_link", pos: [3, -2, -2], desc: "Technical Profile" },
   { id: "opps", icon: <FaPlug />, color: "#22c55e", label: "Open", link: "#", pos: [0, -5, 1], desc: "Available for Internships" },
 ];
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./provider";
+import { TidalCursor } from "@/components/ui/tidal-cursor";
 
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -35,6 +36,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
+          <TidalCursor />
           {children}
         </ThemeProvider>
       </body>

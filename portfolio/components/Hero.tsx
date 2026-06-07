@@ -4,6 +4,7 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 import { Spotlight } from './ui/spotlight'
 import SplitText from './ui/SplitText'
+import DynamicText from './ui/DynamicText'
 
 const RippleGrid = dynamic(() => import('./ui/RippleGrid'), { ssr: false })
 
@@ -49,9 +50,17 @@ const Hero = () => {
               rootMargin="-100px"
               textAlign="center"
             />
-            <p className="max-w-[90vw] text-sm font-medium tracking-[0.18em] text-white-100/80 sm:text-base">
-              Full-Stack Developer &middot; Building AI-powered, scalable systems.
-            </p>
+            <div className="flex flex-col items-center gap-2 max-w-[90vw] text-sm font-medium tracking-[0.18em] text-white-100/80 sm:text-base">
+              <span>Full-Stack Developer</span>
+              <DynamicText 
+                phrases={[
+                  "Building AI-powered systems.",
+                  "Designing scalable backends.",
+                  "Crafting modern immersive UIs.",
+                  "Engineering distributed architectures."
+                ]} 
+              />
+            </div>
           </div>
         </div>
       </div>
